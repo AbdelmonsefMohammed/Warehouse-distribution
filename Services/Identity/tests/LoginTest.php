@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Treblle\Tools\Http\Enums\Status;
 use App\Http\Controllers\Auth\LoginController;
-use function Pest\Laravel\PostJson;
+use function Pest\Laravel\postJson;
 
 it('validates the users input', function () : void {
     postJson(
