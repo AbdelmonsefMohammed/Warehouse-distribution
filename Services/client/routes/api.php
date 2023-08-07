@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Clients\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('service-auth')->prefix('clients')->as('clients:')->group(static function () : void {
-    Route::get('/')->name('list');
+    Route::get('/', IndexController::class)->name('list');
     Route::post('/')->name('register');
     Route::put('{ulid}')->name('update');
     Route::delete('{ulid}')->name('delete');

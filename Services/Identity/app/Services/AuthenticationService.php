@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\DatabaseManager;
 
@@ -32,15 +32,16 @@ final readonly class AuthenticationService
     {
         // create api token
         $token = Str::random(40);
-        // store it in cache
-        Cache::put(
-            key: $token,
+        // store it in redis
+
+        Redis::set($token, json_encode(
             value: [
                 'id'    => $user->getKey(),
                 'role'  => $user->getAttribute('role'),
             ],
-            ttl: now()->addHours(5),
-        );
+            flags: JSON_THORW_ON_ERROR, 
+        ));
+
         // return the token
 
         return $token;

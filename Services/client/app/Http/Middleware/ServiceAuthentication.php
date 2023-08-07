@@ -7,7 +7,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,13 +36,21 @@ final class ServiceAuthentication
 
         // check the token against our cache
 
-        if (! Cache::get($token)) 
+        if (! $identity = Redis::get($token)) 
         {
             throw new AuthenticationException(
                 message: 'Invalid Authentication.',
                 guards: ['api'], 
             );
         }
+
+        $request->merge([
+            'identity'  => json_decode(
+                json: $identity,
+                associative: true,
+                flags: JSON_TROW_ON_ERROR,
+            )
+        ]);
 
         return $next($request);
     }
