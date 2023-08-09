@@ -8,6 +8,7 @@ use App\Enums\Role;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Treblle\Tools\Http\Enums\Status;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\ClientResource;
 use App\Services\AuthorizationService;
 use App\Exceptions\AuthorizationException;
@@ -39,7 +40,11 @@ final class IndexController
 
         return new CollectionResponse(
             data: ClientResource::collection(
-                resource: Client::query()->latest()->paginate(), 
+                resource: QueryBuilder::for(
+                    subject: Client::query(),
+                )->allowIncludes([
+                    'company'
+                ])->latest()->paginate(), 
             ),
         );
     }

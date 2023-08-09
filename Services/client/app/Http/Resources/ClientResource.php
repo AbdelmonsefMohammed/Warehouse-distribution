@@ -22,8 +22,10 @@ final class ClientResource extends JsonResource
             'name'      => $this->resource->name,
             'email'     => $this->resource->email,
             'created'   => new  DateResource(
-               resource: $this->resource->created_at,
-                
+               resource: $this->resource->created_at,  
+            ),
+            'company'   => $this->whenLoaded(
+                relationship: 'company'
             )
         ];
     }
