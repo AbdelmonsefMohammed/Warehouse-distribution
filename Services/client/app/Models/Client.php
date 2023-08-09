@@ -7,7 +7,10 @@ namespace App\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -37,5 +40,13 @@ final class Client extends Model
             related: Member::class,
             foreignKey: 'client_id',
         );    
+    }
+
+    public function orders() : HasMany 
+    {
+        return $this->hasMany(
+            related: Order::class,
+            foreignKey: 'client_id',
+        ); 
     }
 }
