@@ -12,13 +12,18 @@ use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property-read string $id
+ * @property-read OrderStatus $status
+ * @property-read int $weight
+ */
 final class Order extends Model
 {
     use HasFactory, HasUlids;
 
     protected $fillable = [
         'status',
-        'weight',
+        'c',
         'shipping',
         'billing',
         'client_id',

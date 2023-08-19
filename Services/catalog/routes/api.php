@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Products\ShowController as ProductsShow;
 use App\Http\Controllers\Products\IndexController as ProductsIndex;
 
 /*
@@ -16,5 +17,6 @@ use App\Http\Controllers\Products\IndexController as ProductsIndex;
 */
 
 Route::middleware('service-auth')->prefix('products')->as('products:')->group(static function () : void {
-    Route::get('/', ProductsIndex::class)->name('index');
+    Route::get('/', ProductsShow::class)->name('index');
+    Route::get('{ulid}',ShowController::class)->name('show');
 });
